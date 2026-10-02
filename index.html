@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyond Human</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <canvas id="menuPulse"></canvas>
+    <div id="menu-screen" class="screen active">
+        <h1>GateBound</h1>
+        <button onclick="openSlots()">Play Game</button>
+        <button onclick="howToPlay()">How to Play</button>
+    </div>
+
+    <div id="slotScreen" class="screen">
+        <div class="sguide-container slot-container">
+            <div class="sguide-header">
+                <h2>SELECT CHARACTER</h2>
+            </div>
+            <hr class="sguide-divider">
+            <div id="slotList"></div>
+            <hr class="sguide-divider">
+            <button onclick="closeSlots()">Back</button>
+        </div>
+    </div>
+
+    <div id="howToPlayScreen" class="screen">
+    <div class="sguide-container">
+        <div class="sguide-header">
+            <h2>HOW TO PLAY</h2>
+        </div>
+
+        <hr class="sguide-divider">
+
+        <div class="sGuide-body">
+
+            <div class="guide-section">
+                <div class="guide-section-title">COMBAT</div>
+                <p>Left Click — Basic Attack (fires toward your cursor)<br>Keys 1-6 — Class Skills, unlocked as you level up.</p>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-section-title">INTERACTION</div>
+                <p>E — Interact with NPCs and enter dungeon.</p>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-section-title">DUNGEONS</div>
+                <p>Approach a gate (the blue dot on the minimap) and press E to enter.<br>Survive the waves and defeat the boss to earn EXP. After the second wave you get a 5 second warning before the boss appears. When you clear a dungeon you are teleported back to the Gate Keeper. Dungeon EXP scales with your level.</p>
+                <p>The red dot is where the regular mobs spawn at, just in case you are waiting, or don't want to do dungeons at the moment.</p>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-section-title">SKILLS</div>
+                <p>Both Hunters and Humans have 6 skills, unlocked at level 1, 5, 10, 20, 30 and 40. All skills scale with STR. Hunters pay Mana to cast; Humans rely on cooldowns only. Press K to open the Skill Upgrade menu and spend Skill Points to make unlocked skills hit harder.</p>
+                <p>Max a skill out (5 upgrades) to MASTER it: it gains a new effect, a 15% shorter cooldown and 3 bonus stat points.</p>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-section-title">SPECIAL ABILITY</div>
+                <p>F — Unlocks at level 10. Hunters use Mana Overload (free skills, bonus damage, auto-firing bolts). Humans use Unbreakable (invulnerable with a damage pulse around you).</p>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-section-title">STATS</div>
+                <p>C — Open stat menu.<br>Click + buttons to upgrade stats. Every level gives stat points, and the amount grows as you level.</p>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-section-title">QUESTS</div>
+                <p>J — Open the Quest Log. Click TAKE QUEST on up to 3 quests at a time and track their progress on the left side of the screen. Rewards are EXP, Stat Points and Skill Points.</p>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-section-title">IN‑GAME HELP</div>
+                <p>Press H anytime during gameplay to reopen this menu.</p>
+                <p>Ranks are randomly decided. E rank gets 0 stat points. D rank gets 1 stat point. C rank gets 3 stat points. B rank gets 10 stat points. A rank gets 15 stat points. S rank gets 25 stat points, with E rank being the lowest rank and the first dungeon. If you get a higher rank than E rank, you are able to do that dungeon, and, in this case, the lower dungeons below that rank. Ex: User gets B rank, user is able to do B rank, C Rank, D rank, and E rank dungeon (lower dungeons).</p>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-section-title">RANKING UP</div>
+                <p>Press X to interact with examiner.</p>
+                <p>"Ranking" up is just another way to progress and do higher dungeons. The lowest rank is E rank. To rank up past that, go to the examiner by the dungeon NPC. The examiner will then list your rank, and then the requirements to progress to the next rank. Ranking up gives a large bonus of stat points and skill points, and allows you to go on and do higher dungeons. Ranks go E, D, C, B, A, S, then SS and SSS. Every rank-up needs more kills, more dungeon clears and a higher level than the last, and S to SS is the hardest. Higher dungeons also have more waves and hit harder.</p>
+            </div>
+        </div>
+
+        <hr class="sguide-divider">
+
+        <button onclick="closeHowToPlay()">Back</button>
+    </div>
+</div>
+
+
+    <div id="menu-intro" class="screen">
+        <div id="intro-words"></div>
+        <p id="proceedText" onclick="proceedToStats()">Proceed ></p>
+    </div>
+
+    <div id="screen-stats" class="screen">
+        <div class="status-container">
+            <div class="status-row">
+                <h2 id="statusTitle">STATUS</h2>
+                <p id="level">LV. 1</p>
+            </div>
+            <hr class="divider">
+            <div class="name-row">
+                <span class="stat-label">NAME:</span>
+                <input type="text" id="uname" placeholder="ENTER NAME">
+                <span id="displayName" style="display:none;"></span>
+            </div>
+            <p id="playerClass" class="stat-line">CLASS:</p>
+            <p id="rank" class="stat-line">RANK: </p>
+            
+            <p id="title" class="stat-line">TITLE: N/A</p>
+            <hr class="divider">
+            <div class="physical-stats">
+                <div class="stat-col">
+                    <p id="healthPoints" class="stat-line">HP: N/A</p>
+                    <p id="manaPool" class="stat-line">MANA: N/A</p>
+                    <p id="agility" class="stat-line">AGILITY: N/A</p>
+                </div>
+                <div class="stat-col">
+                    <p id="strength" class="stat-line">STR: N/A</p>
+                </div>
+            </div>
+        </div>
+        <p id="nameWarning">Please enter your name before proceeding.</p>
+        <button id="en" onclick="proceedToGuide()">Proceed ></button>
+    </div>
+
+    <div id="screenForGuide" class="screen">
+        <div class="sguide-container" id="scrGuideContainer">
+            <div class="sguide-header">
+                <h2 id="sGuideTitle"></h2>
+                <p id="sGuideCaption"></p>
+            </div>
+            
+            <hr class="sguide-divider">
+            <div id="sGuideContent" class="sGuide-body"></div>
+            <hr class="sguide-divider">
+            <button id="enterWorldBtn" onclick="enterWorld()">Enter World</button>
+        </div>
+    </div>
+    <div id="screenGame" class="screen">
+        <canvas id="gameCanvas"></canvas>
+        <div id="inGameHelp" class="inGameHelp">
+    <h2>HOW TO PLAY</h2>
+    <p><strong>Attack:</strong> Left Click</p>
+    <p><strong>Skills:</strong> 1 - 6</p>
+    <p><strong>Special Ability:</strong> F (unlocks Lv.10)</p>
+    <p><strong>Interact:</strong> E</p>
+    <p><strong>Stat Menu:</strong> C</p>
+    <p><strong>Skill Upgrades:</strong> K</p>
+    <p><strong>Quest Log:</strong> J (click Take Quest)</p>
+    <p><strong>Rank-Up Examiner:</strong> X, then R</p>
+    <p><strong>Dungeon Tier Select:</strong> Q to move up tiers / Z to move down tiers</p>
+    <p><strong>Close Help:</strong> H</p>
+</div>
+
+    </div>
+    
+</body>
+</html>
